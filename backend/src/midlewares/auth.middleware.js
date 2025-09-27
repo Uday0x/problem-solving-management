@@ -58,3 +58,33 @@ try {
         res.status(500).json({message:"Error authenticating user"});
 }
 }
+
+export const checkAdmin = async(req,res,next)=>{
+    try {
+        const userId = req.user.id; //u can get teh id here coz u put them in the object
+
+        //find the user based on the id
+        const user = await db.user.findUnique({
+            where:{
+                id:userId
+            },
+            select:{
+                role:true
+            }
+        })
+
+
+        if(!user || !user.role == ADMIN){
+            return res.status(403).json({
+                message:"Access denied only admins allowed"
+            })
+        }
+
+        next() //important may face errors due to this
+    } catch (error) {
+        console.error("error checking the role ",error)
+        res.status(500).json({
+            message:"error checking the role"
+        })        
+    }
+}

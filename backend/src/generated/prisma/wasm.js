@@ -103,9 +103,31 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ProblemScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  difficulty: 'difficulty',
+  tags: 'tags',
+  userId: 'userId',
+  exmaples: 'exmaples',
+  constraints: 'constraints',
+  hints: 'hints',
+  editorial: 'editorial',
+  testcases: 'testcases',
+  codeSnippets: 'codeSnippets',
+  referanceSolution: 'referanceSolution',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -117,13 +139,26 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
 exports.UserRole = exports.$Enums.UserRole = {
   ADMIN: 'ADMIN',
   USER: 'USER'
 };
 
+exports.Difficulty = exports.$Enums.Difficulty = {
+  EASY: 'EASY',
+  MEDIUM: 'MEDIUM',
+  HARD: 'HARD'
+};
+
 exports.Prisma.ModelName = {
-  user: 'user'
+  User: 'User',
+  problem: 'problem'
 };
 /**
  * Create the Client
@@ -172,13 +207,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum UserRole {\n  ADMIN\n  USER\n}\n\nmodel user {\n  id        String   @id @default(uuid())\n  name      String?\n  email     String   @unique\n  image     String?\n  role      UserRole @default(USER)\n  password  String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
-  "inlineSchemaHash": "7b9174354f1096a5d2753dcb2c673fc72e89480a441b087a5293aa45ed453859",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum UserRole {\n  ADMIN\n  USER\n}\n\nenum Difficulty {\n  EASY\n  MEDIUM\n  HARD\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  name      String?\n  email     String   @unique\n  image     String?\n  role      UserRole @default(USER)\n  password  String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  problems problem[]\n}\n\nmodel problem {\n  id          String     @id @default(uuid())\n  title       String\n  description String\n  difficulty  Difficulty\n  tags        String[]\n  userId      String\n  exmaples    Json\n  constraints String\n  hints       String?\n  editorial   String?\n\n  testcases         Json\n  codeSnippets      Json\n  referanceSolution Json\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n}\n",
+  "inlineSchemaHash": "5525df38799b6f3b91b6b7afe7b9b0d8e8b25254e4d464e8b20c69f5f0b54a07",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"user\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRole\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRole\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"problems\",\"kind\":\"object\",\"type\":\"problem\",\"relationName\":\"UserToproblem\"}],\"dbName\":null},\"problem\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"difficulty\",\"kind\":\"enum\",\"type\":\"Difficulty\"},{\"name\":\"tags\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"exmaples\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"constraints\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"hints\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"editorial\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"testcases\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"codeSnippets\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"referanceSolution\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToproblem\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
