@@ -2053,18 +2053,18 @@ export namespace Prisma {
   }
 
   export type userWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
     email?: string
     AND?: userWhereInput | userWhereInput[]
     OR?: userWhereInput[]
     NOT?: userWhereInput | userWhereInput[]
-    id?: StringFilter<"user"> | string
     name?: StringNullableFilter<"user"> | string | null
     image?: StringNullableFilter<"user"> | string | null
     role?: EnumUserRoleFilter<"user"> | $Enums.UserRole
     password?: StringFilter<"user"> | string
     createdAt?: DateTimeFilter<"user"> | Date | string
     updatedAt?: DateTimeFilter<"user"> | Date | string
-  }, "email">
+  }, "id" | "email">
 
   export type userOrderByWithAggregationInput = {
     id?: SortOrder

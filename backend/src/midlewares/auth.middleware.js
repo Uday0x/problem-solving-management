@@ -3,7 +3,7 @@
 //verify it using try and catch (jwt.verify)
 //find user based on the id
 
-import { db } from "../libs/db";
+import { db } from "../libs/db.js";
 import jwt from "jsonwebtoken"
 
 export const authMiddleware = async(req,res,next)=>{
@@ -18,7 +18,7 @@ try {
                 message:"no valid token found"
             })
         }
-    
+        console.log("checked token?")
         let decoded;
     
         try {
@@ -44,7 +44,7 @@ try {
                 role:true
             }
         })
-    
+        console.log("finished user")
         if(!user){
             return res.status(404).json({
                 message:"user not found"
@@ -52,9 +52,9 @@ try {
         }
     
         req.user=user;
+        next() //important
 } catch (error) {
     console.error("Error authenticating user:", error);
         res.status(500).json({message:"Error authenticating user"});
 }
-
 }
