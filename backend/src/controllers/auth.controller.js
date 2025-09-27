@@ -18,7 +18,7 @@ export const register = async (req, res) => {
         
         if(!email || !password || !name){
             return res.status(400).json({
-                message:"plz check some of teh crediantials are missing"
+                message:"plz check some of the crediantials are missing"
             })
         }
     
@@ -78,4 +78,66 @@ export const register = async (req, res) => {
         })
     }
 
+}
+
+export const login =async (req,res)=>{
+    const {email ,password} = req.body;
+
+    //can alos implement zod validation
+    if(!email || !password){
+        res.status(201).json({
+                message:"plz check some of the crediantials are missing"
+        })
+    }
+    try {
+        const user = await db.user.findUnique({
+            where:{
+                email
+            }
+        })
+
+        if(!user){
+            return res.status(200).json({
+                message:"user not found based on the details provided"
+            })
+        }
+
+        const isPassowrdCorrect =await bcrypt.compare(password,user.password)
+
+        if(!isPassowrdCorrect){
+            return res.status(201).json({
+                message:"password don't match"
+            })
+        }
+
+        //create a sesion 
+        const token = jwt.sign({id:user.id},
+            process.env.JWT_SECRET,
+            {expiresIn:"7d"}
+        )
+
+        res.cookie("jwt",token,{
+             httpOnly:true,
+                sameSite:"strict",
+                secure:process.env.NODE_ENV !== "development",
+                maxAge:1000 * 60 * 60 * 24 * 7 // 7 days
+        })
+
+        res.status(200).json({
+            success:true,
+            message:"User loggedin successfully",
+            user:{
+                id:user.id,
+                email:user.email,
+                name:user.name,
+                role:user.role,
+                image:user.image
+            }
+        })
+    } catch (error) {
+        console.log("error logging the user",error)
+        res.status(200).json({
+            message:"error logging the user"
+        })
+    }
 }
