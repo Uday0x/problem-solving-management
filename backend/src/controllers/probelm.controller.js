@@ -10,9 +10,10 @@ export const createProblem= async(req,res)=>{
 } = req.body
 
     try {
-        for (const [language,solutionCode] of referenceSolutions) {
-            //create a mini which feteches the languageId
-    
+        for (const [language,solutionCode] of Object.entries(referenceSolutions)) {
+              //create a mini which feteches the languageId
+            console.log("solutioncode",solutionCode)
+        
             const languageId = getJudge0LanguageId(language)
     
             if(!languageId){
@@ -20,7 +21,7 @@ export const createProblem= async(req,res)=>{
                     error:`language ${language} not supported`
                 })
             }
-        }
+        
     
         const submissions = testcases.map(({input,output})=>({
             source_code:solutionCode,
@@ -35,7 +36,7 @@ export const createProblem= async(req,res)=>{
     
     
         const results =await pollBatchResults(tokens);
-    
+      
         for (let i = 0; i < results.length; i++) {
             const result = results[i];
             console.log("Result-----", result);
@@ -49,13 +50,18 @@ export const createProblem= async(req,res)=>{
             }
           }
     
-    
-          const newProblem = await db.problem.create({
+        }
+          const newProblem = await db.problem.create(
+            {
             data:{
                     title,description,difficulty,tags,examples,constraints,hints,testcases,codeSnippets, referenceSolutions,userId:req.user.id
     
             }
-          })
+            
+          },
+          
+        )
+          
     
           return res.status(201).json({
             success:true,

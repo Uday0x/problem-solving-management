@@ -62,7 +62,7 @@ try {
 export const checkAdmin = async(req,res,next)=>{
     try {
         const userId = req.user.id; //u can get teh id here coz u put them in the object
-
+        console.log(userId)
         //find the user based on the id
         const user = await db.user.findUnique({
             where:{
@@ -72,9 +72,10 @@ export const checkAdmin = async(req,res,next)=>{
                 role:true
             }
         })
+        console.log(user)
 
 
-        if(!user || !user.role == ADMIN){
+        if(!user || !user.role == "ADMIN"){
             return res.status(403).json({
                 message:"Access denied only admins allowed"
             })

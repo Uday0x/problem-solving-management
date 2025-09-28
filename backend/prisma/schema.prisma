@@ -48,7 +48,7 @@ model problem {
     difficulty Difficulty
     tags String[]   
     userId String
-    exmaples Json
+    examples Json
     constraints String
     hints  String?
     editorial String?
