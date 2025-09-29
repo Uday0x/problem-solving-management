@@ -7,7 +7,7 @@ import { db } from "../libs/db.js";
 import jwt from "jsonwebtoken"
 
 export const authMiddleware = async(req,res,next)=>{
-    //need to add next sonce it is a middleware
+    //need to add next since it is a middleware
 try {
     
         const token = req.cookies.jwt; //jwt since we are giving the name jwt

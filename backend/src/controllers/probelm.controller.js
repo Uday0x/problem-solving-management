@@ -77,5 +77,37 @@ export const createProblem= async(req,res)=>{
     }
 }
 
+export const getAllProblems = async(req,res)=>{
+  //using findmany get all the problems
+  //check what if problems dont arrive from the databacse 
+  //return response and error
+
+  try {
+    const problems = await db.problem.findMany(
+      {
+        where:{
+            //condition needs to given later
+        }
+      }
+    )
+
+    if(!problems){
+      return res.status(404).json({
+        message:"problems not found"
+      })
+    }
+
+    res.status(200).json({
+      message:"message fetched successfully",
+      data:problems
+    })
+  } catch (error) {
+    console.log("problems nhi aa rhe bhai",error)
+    res.status(404).json({
+      message:"error fetching the problems"
+    })
+  }
+}
+
 
 
