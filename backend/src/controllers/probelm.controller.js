@@ -111,3 +111,38 @@ export const getAllProblems = async(req,res)=>{
 
 
 
+export const getProblemById = async(req,res)=>{
+  const {id}=req.params;
+  console.log(id)
+
+  try {
+   const problem =await db.problem.findUnique({
+  where:{
+    id
+  }
+})
+
+if(!problem){
+  return res.status(400).json({
+    message:"problem not found by the following id"
+  })
+}
+
+
+return res.status(200).json({
+  message:`problem by id ${id} fetched sucessfully`,
+  problem
+
+})
+  } catch (error) {
+    console.log("error hai bhai infetching problem by id",error)
+      return res.status(400).json({
+        message:"error in fetching problem by id"
+      })
+  }
+}
+export const updateProblem = async(req,res)=>{
+
+}
+
+
