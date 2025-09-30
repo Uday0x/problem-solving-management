@@ -1,5 +1,5 @@
 import express from "express";
-import { createProblem, deleleProblem, getAllProblems, getProblemById, updateProblem } from "../controllers/probelm.controller.js";
+import { createProblem, deleleProblem, getAllProblems, getProblemById, updateProblem } from "../controllers/problem.controller.js";
 import { authMiddleware, checkAdmin } from "../midlewares/auth.middleware.js";
 
 

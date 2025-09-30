@@ -17,7 +17,7 @@ export const executeCode = async (req, res) => {
 
     const userId = req.user.id;
 
-    if(!Array.isArray(stdin) || stdin === 0 || !Array.isArray(expected_output) || expected_output.length !== stdin){
+    if(!Array.isArray(stdin) || stdin === 0 || !Array.isArray(expected_output) || expected_output.length !== stdin.length){
         return res.status(200).json({message:"Invalid or missing test case"})
     }
 

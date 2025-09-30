@@ -3,7 +3,10 @@ import { authMiddleware } from "../midlewares/auth.middleware.js";
 import { executeCode } from "../controllers/executeCode.controller.js";
 
 
-const executeRouter = express.Router();
+const executeRoutes = express.Router();
 
 
-executeRouter.post("/execute-code",authMiddleware,executeCode)
+executeRoutes.post("/execute",authMiddleware,executeCode)
+
+
+export default executeRoutes

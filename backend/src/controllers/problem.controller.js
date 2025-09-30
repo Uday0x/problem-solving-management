@@ -109,8 +109,6 @@
     }
   }
 
-
-
   export const getProblemById = async(req,res)=>{
     const {id}=req.params;
     console.log(id)
@@ -141,6 +139,7 @@
         })
     }
   }
+  
   export const updateProblem = async(req,res)=>{
       //get the id from req.params
       const {id}=req.params;
