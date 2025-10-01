@@ -24,8 +24,15 @@
 // // console.log(obj3);
 
 
+// const obj3 = [1,2,3,4,5]
+// const obj4 = obj3.map((e,i)=>(e))
+// console.log(obj4)
 
 
+//full parameter sof map method 
 
+const obj5 = [1,2,3,4,5]
+const obj6 = obj5.map((Element,index,Array)=>(index+Array))
+console.log(obj6)
 
-
+console.log(obj6.type)
