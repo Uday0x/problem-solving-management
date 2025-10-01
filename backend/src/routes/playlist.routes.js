@@ -11,3 +11,4 @@ playlistRouter.get("/get-all-playlist",authMiddleware,getAllPlaylistDetails)
 
 playlistRouter.get("/getPlaylistDetails",authMiddleware,getPlaylistDetails)
 
+
