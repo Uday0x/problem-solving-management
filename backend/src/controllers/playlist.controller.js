@@ -62,3 +62,36 @@ export const getAllPlaylistDetails = async(req,res)=>{
         })
     }
 }
+
+export const getPlaylistDetails = async(req,res)=>{
+    const {playlistId} = req.params
+
+
+    try {
+        const playlist = await db.playlist.findUnique({
+            where:{
+                id:playlistId,
+                userId:req.user.id
+            },
+            include:{
+                problems:{
+                    include:{
+                        problem:true
+                    }
+                }
+            }
+        })
+
+        return res.status(200).json({
+            message:"fetched the data succesfully",
+            playlist
+        })
+    } catch (error) {
+        console.log("error in fetching teh details",error);
+        
+
+        return res.status(500).json({
+            message:"error in fetching the details"
+        })
+    }
+}
