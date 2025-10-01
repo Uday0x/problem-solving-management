@@ -14,12 +14,12 @@ export const executeCode = async (req, res) => {
     //send it to judge0 and print teh output
 
 
-    const {source_code,language_id,stdin,expected_output,problemId} = req.body
+    const {source_code,language_id,stdin,expected_outputs,problemId} = req.body
 
     const userId = req.user.id;
 
     try {
-        if(!Array.isArray(stdin) || stdin === 0 || !Array.isArray(expected_output) || expected_output.length !== stdin.length){
+        if(!Array.isArray(stdin) || stdin === 0 || !Array.isArray(expected_outputs) || expected_outputs.length !== stdin.length){
             return res.status(200).json({message:"Invalid or missing test case"})
         }
     
@@ -33,19 +33,20 @@ export const executeCode = async (req, res) => {
     
         const tokens = submissionResponse.map((res)=>res.token)
     
-        const  result = await pollBatchResults(tokens);
+        const  results = await pollBatchResults(tokens);
     
     
         console.log("Results ----------------")
-        console.log( result);
+        console.log( results);
     
         //analyze the test 
         let allPassed = true;
-        const detailedResult =  result.map((result,i)=>{
-          const stdOut = result.stdOut.trim();
-          const expected_output = expected_output[i]?.trim();
+        const detailedResult =  results.map((result,i)=>{
+          const stdOut = result.stdout?.trim();
+          const expected_output = expected_outputs[i]?.trim();
           const passed = stdOut === expected_output
-    
+            
+          console.log(stdOut)
           if(!passed) allPassed = false;
     
           return {
@@ -61,14 +62,14 @@ export const executeCode = async (req, res) => {
           }
         })
     
-            console.log(detailedResult)
+            console.log("deatiled result -----",detailedResult)
     
     
             const submission = await db.submission.create({
                 data:{
                     userId,
                     problemId,
-                    source_code,
+                    sourceCode:source_code,
                     language:getlanguageName(language_id), //getalnguage is hard coded now to reduce unecessary load on server 
                     stdin:detailedResult.some((r)=>r.stdin) ?  
                         JSON.stringify(detailedResult.map((r)=>r.stdin)) : null ,
@@ -110,7 +111,7 @@ export const executeCode = async (req, res) => {
             submissionId:submission.id,
             testcase:r.testcase,
             passed:r.passed,
-            stdOut:r.stdOut,
+            stdout:r.stdOut,
             expected:r.expected,
             stderr:r.stderr,
             complieOutput:r.complieOutput,
@@ -118,8 +119,10 @@ export const executeCode = async (req, res) => {
             memory:r.memory,
             time:r.time
         }))
+
+        console.log("testcaseResults----",testcaseResults)
     
-            await db.testcaseResult.createMany({
+            await db.testCaseResult.createMany({
                 data:testcaseResults
             })
     
