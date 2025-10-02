@@ -100,6 +100,7 @@ export const getPlaylistDetails = async(req,res)=>{
 
 
 export const addProblemtoPlaylist =async(req,res)=>{
+
     //get playlist from req.params
     //get problemId(in the form of arrays) from req.body
     
@@ -136,5 +137,30 @@ export const addProblemtoPlaylist =async(req,res)=>{
     } catch (error) {
      console.error("Error adding problems to playlist:", error.message);
     res.status(500).json({ error: "Failed to add problems to playlist" });
+    }
+}
+
+export const deletePlaylist = async(req,res)=>{
+    const {playlistId} = req.params;
+
+
+    try {
+        const deletedPlaylist = await db.playlist.delete({
+            where:{
+                id:playlistId
+            }
+        });
+
+
+        res.status(200).json({
+            success:true,
+            message:"Playlist deleted suceesfully",
+            deletedPlaylist
+        })
+    } catch (error) {
+        console.error("error deleting the playlist",error.message)
+        res.status(500).json({
+            error:"falied to delete playlist"
+        })
     }
 }
