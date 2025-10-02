@@ -1,5 +1,5 @@
 import express from "express"
-import { addProblemtoPlaylist, createPlaylist, deletePlaylist, getAllPlaylistDetails, getPlaylistDetails } from "../controllers/playlist.controller.js";
+import { addProblemtoPlaylist, createPlaylist, deletePlaylist, getAllPlaylistDetails, getPlaylistDetails, removeProblemFromPlaylist } from "../controllers/playlist.controller.js";
 import { authMiddleware } from "../midlewares/auth.middleware.js";
 
 export const playlistRouter = express.Router();
@@ -14,4 +14,6 @@ playlistRouter.get("/getPlaylistDetails",authMiddleware,getPlaylistDetails)
 playlistRouter.post("/:playlistId/add-problem",authMiddleware,addProblemtoPlaylist)
 
 playlistRouter.delete("/:playlistId",authMiddleware,deletePlaylist)
+
+playlistRouter.delete("/:playlistId/remove-Problem",authMiddleware,removeProblemFromPlaylist)
 
