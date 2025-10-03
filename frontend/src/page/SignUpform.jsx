@@ -35,7 +35,7 @@ function SignUpform() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodReslover(signUpschema)
+    resolver:zodResolver(signUpschema)
   })
   console.log(register, handleSubmit) //printing it for the curiosity //for rregister has input tracking field
 

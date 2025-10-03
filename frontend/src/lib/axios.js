@@ -3,6 +3,6 @@ import {axios} from "axios"
 
 
 export const axiosInstance = axios.create({
-    baseURL:import.meta.env.mode ==="devlopment" ? "http://localhost:7000/api/v1" : null,
+    baseURL:import.meta.env.mode ==="devlopment" ? "http://localhost:7000/api/v1" : "/api/v1",
     withCredentials: true,
 })
