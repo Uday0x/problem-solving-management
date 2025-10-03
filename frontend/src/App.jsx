@@ -1,5 +1,7 @@
 import {Routes,Route,Navigate} from 'react-router-dom'
 import SignUpform from './page/SignUpform'
+import HomePage from './page/HomePage'
+import Login from './page/Login'
 
 const App = () => {
   return (
@@ -27,3 +29,5 @@ const App = () => {
     </div>
   )
 }
+
+export default App
