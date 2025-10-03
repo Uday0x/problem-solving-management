@@ -1,18 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {Routes,Route,Navigate} from 'react-router-dom'
+import SignUpform from './page/SignUpform'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <h1 class="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-    </>
+    <div className='flex flex-col items-center justify-start'
+    >
+      <Routes>
+
+      <Route
+      path="/"
+      element={<HomePage/>}
+    />
+
+
+    <Route 
+    path="/login"
+    element={<Login/>}
+    />
+
+
+    <Route 
+    path="/signup"
+    element={<SignUpform/>}
+    />
+      </Routes>
+    </div>
   )
 }
-
-export default App
