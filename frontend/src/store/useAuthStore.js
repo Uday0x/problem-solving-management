@@ -19,18 +19,19 @@ export const useAuthStore = create((set) => ({
 
 
         try {
-            const res = await axiosInstance.get("/auth/check")
+            const res = await axiosInstance.get("/auth/check") //if any doubt u can refer to axios instance 
             console.log("check response",res.data);
 
             set({authUser:res.data.user})
             
         } catch (error) {
-            console.log("error checking auth":error);
+            console.log("error checking auth",error);
             set({authUser:nul})
         }finally{
             set({isCheckingAuth:false})
         }
     },
+
 
 
     login:async(data)=>{
@@ -39,7 +40,7 @@ export const useAuthStore = create((set) => ({
             const res = axiosInstance.post("/auth/login",data)  //be craeful wt abt route u hitting 
             set({authUser:res.data.user})
 
-            toast.success(res.data.message);
+            toast.success(res.data.message);  //dont forget to import toast from react hot  in app.jsx file
         } catch (error) {
             console.log("error siging up",error)
             toast.error("error signing up")
