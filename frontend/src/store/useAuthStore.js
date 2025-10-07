@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 
-import toast from "react-hot-toast";
+import toast, { ErrorIcon } from "react-hot-toast";
 
 
 
@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 //can put any name instead of useAuthStore
 export const useAuthStore = create((set) => ({
     authUser:null,
-    isSignUp:false,
+    isSigninUp:false,
     isLogginIn:false,
     isCheckingAuth:false,
 
@@ -46,6 +46,23 @@ export const useAuthStore = create((set) => ({
             toast.error("error signing up")
         }finally{
             set({isSignUp:false})
+        }
+    },
+
+
+    signup:async(data)=>{
+        set({ isSignUp:true })
+        try {
+            const res = await axiosInstance.post("/auth/register",data)
+
+            set({authUser:res.data.user})
+
+            toast.success(res.data.message)
+        } catch (error) {
+            console.log("error logging in the user",error);
+            toast.error("error signingUp")
+        }finally{
+            set({isSigninUp:false})
         }
     }
 }))
