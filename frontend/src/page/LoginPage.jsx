@@ -25,11 +25,11 @@ const LoginSchema = z.object({
 
 
 
-function SignUpform() {
+function Loginform() {
 
   const [showPassword, setShowPassword] = useState(false) // this is for eye symbol in the password field
 
-
+  const {isLoggingIn , login} = useAuthStore() //everything comes from useAuthStore
   const {
     register,
     handleSubmit,
@@ -39,7 +39,17 @@ function SignUpform() {
   })
   console.log(register, handleSubmit) //printing it for the curiosity //for rregister has input tracking field
 
-  let authuser = null;
+//   let authuser = null;
+
+
+const onSubmit = async(data)=>{
+    try {
+        await login(data)
+        console.log(data)
+    } catch (error) {
+        console.log("SignUp failed",error)
+    }
+}
 
 
   return (
@@ -143,7 +153,7 @@ function SignUpform() {
             <button
               type="submit"
               className="btn btn-primary w-full"
-              disabled={isLogginIn}
+              disabled={isLoggingIn}
             >
               {isLoggingIn  ? (
                 <>
@@ -181,4 +191,4 @@ function SignUpform() {
   )
 }
 
-export default SignUpform
+export default Loginform

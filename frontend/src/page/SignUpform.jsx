@@ -30,8 +30,8 @@ function SignUpform() {
 
   const [showPassword, setShowPassword] = useState(false) // this is for eye symbol in the password field
 
-
-  const {
+  const {signup,isSigninUp} = useAuthStore()
+   const {
     register,
     handleSubmit,
     formState: { errors },
@@ -40,7 +40,15 @@ function SignUpform() {
   })
   console.log(register, handleSubmit) //printing it for the curiosity //for rregister has input tracking field
 
-  let authuser = null;
+ const onSumbit = async(data)=>{
+      try {
+        await signup(data)
+        console.log("sign up data",data)
+      } catch (error) {
+        console.error("SignUp failed",error)
+      }
+ }
+// let authuser = null;
 
 
   return (
@@ -58,7 +66,7 @@ function SignUpform() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={handleSubmit(onSumbit)} className="space-y-6">
 
 
             <div className="form-control">

@@ -25,7 +25,9 @@ const App = () => {
   return (
     <div className='flex flex-col items-center justify-start'
     >
-      <Toaster/>
+      <Toaster/>      
+
+      {/* //toaster has to be mentioned here so that it can be used in components */}
       <Routes>
 
       <Route

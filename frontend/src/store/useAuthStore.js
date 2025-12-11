@@ -10,7 +10,7 @@ import toast, { ErrorIcon } from "react-hot-toast";
 export const useAuthStore = create((set) => ({
     authUser:null,
     isSigninUp:false,
-    isLogginIn:false,
+    isLogginIn:false, 
     isCheckingAuth:false,
 
     checkAuth:async()=>{
@@ -18,14 +18,14 @@ export const useAuthStore = create((set) => ({
 
 
         try {
-            const res = await axiosInstance.get("/auth/check") //if any doubt u can refer to axios instance 
+            const res = await axiosInstance.get("/auth/check") //if any doubt u can refer to axios instance //bcz lareay /api/v1 is already present there
             console.log("check response",res.data);
 
-            set({authUser:res.data.user})
+            set({authUser:res.data.user}) //in the auth/check route we are returning user data 
             
         } catch (error) {
             console.log("error checking auth",error);
-            set({authUser:nul})
+            set({authUser:null})
         }finally{
             set({isCheckingAuth:false})
         }
@@ -36,7 +36,7 @@ export const useAuthStore = create((set) => ({
     login:async(data)=>{
         set({isLogginIn:true})
         try {
-            const res = axiosInstance.post("/auth/login",data)  //be craeful wt abt route u hitting 
+            const res = axiosInstance.post("/auth/login",data)  //be careful wt abt route u hitting 
             set({authUser:res.data.user})
 
             toast.success(res.data.message);  //dont forget to import toast from react hot  in app.jsx file
