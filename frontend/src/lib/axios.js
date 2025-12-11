@@ -1,5 +1,5 @@
 //here we create axios instance 
-import {axios} from "axios"
+import axios from "axios"
 
 
 export const axiosInstance = axios.create({

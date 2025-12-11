@@ -12,7 +12,7 @@ import {
   Lock,
   Mail,
 } from "lucide-react";
-
+import AuthImagePattern from "../components/AuthImagePattern"
 //create a scheam for the frontend validations
 
 
@@ -25,7 +25,7 @@ const LoginSchema = z.object({
 
 
 
-function Loginform() {
+function LoginPage() {
 
   const [showPassword, setShowPassword] = useState(false) // this is for eye symbol in the password field
 
@@ -191,4 +191,4 @@ const onSubmit = async(data)=>{
   )
 }
 
-export default Loginform
+export default LoginPage
