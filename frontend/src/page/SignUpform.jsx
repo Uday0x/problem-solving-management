@@ -28,7 +28,7 @@ const signUpschema = z.object({
 
 function SignUpform() {
 
-  const [showPassword, setShowPassword] = useState(false) // this is for eye symbol in teh passowrd field
+  const [showPassword, setShowPassword] = useState(false) // this is for eye symbol in the password field
 
 
   const {

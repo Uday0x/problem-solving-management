@@ -3,6 +3,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 import { Link } from 'react-router-dom'
+import { useAuthStore } from '../store/useAuthStore';
 import {
   Code,
   Eye,
@@ -15,17 +16,18 @@ import {
 //create a scheam for the frontend validations
 
 
-const Loginschema = z.object({
+const LoginSchema = z.object({
   email: z.string().email("enter valid email Id address plz"),
-  password: z.string().min(6, "passowrd must be atalest of 6 characters"),
+  password: z.string().min(6, "passowrd must be atleast of 6 characters"),
+
 })
 
 
 
 
-function Login() {
+function SignUpform() {
 
-  const [showPassword, setShowPassword] = useState(false) // this is for eye symbol in teh passowrd field
+  const [showPassword, setShowPassword] = useState(false) // this is for eye symbol in the password field
 
 
   const {
@@ -33,7 +35,7 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver:zodResolver(Loginschema)
+    resolver:zodResolver(LoginSchema)
   })
   console.log(register, handleSubmit) //printing it for the curiosity //for rregister has input tracking field
 
@@ -50,14 +52,35 @@ function Login() {
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                 <Code className="w-6 h-6 text-primary" />
               </div>
-              <h1 className="text-2xl font-bold mt-2">Welcome <Back></Back></h1>
-              <p className="text-base-content/60">Login to your account</p>
+              <h1 className="text-2xl font-bold mt-2">Welcome </h1>
+              <p className="text-base-content/60">LogIn to your account</p>
             </div>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
 
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Name</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Code className="h-5 w-5 text-base-content/40" />
+                </div>
+                <input
+                  type="text"
+                  {...register("name")}
+                  className={`input input-bordered w-full pl-10 ${errors.name ? "input-error" : ""
+                    }`}
+                  placeholder="Virat kohli"
+                />
+              </div>
+
+              {errors.name && (
+                <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+              )}
+            </div>
 
 
             {/* Email */}
@@ -120,15 +143,15 @@ function Login() {
             <button
               type="submit"
               className="btn btn-primary w-full"
-              disabled={isSigninUp}
+              disabled={isLogginIn}
             >
-              {isSigninUp ? (
+              {isLoggingIn  ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
                   Loading...
                 </>
               ) : (
-                "Sign in"
+                "SignIn"
               )}
             </button>
           </form>
@@ -139,7 +162,7 @@ function Login() {
             <p className="text-base-content/60">
               Already have an account?{" "}
               <Link to="/login" className="link link-primary">
-                Sign in
+                Sign Up
               </Link>
             </p>
           </div>
@@ -149,13 +172,13 @@ function Login() {
 
       {/* Right Side - Image/Pattern */}
       <AuthImagePattern
-        title={"Welcome Back to our very own platform!"}
+        title={"Welcome to our platform!"}
         subtitle={
-          "Login and start using our services."
+   "Sign in to continue your journey with us. Don't have an account? Create one now."
         }
       />
     </div>
   )
 }
 
-export default Login 
+export default SignUpform

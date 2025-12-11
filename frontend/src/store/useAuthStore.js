@@ -4,7 +4,6 @@ import { axiosInstance } from "../lib/axios";
 import toast, { ErrorIcon } from "react-hot-toast";
 
 
-
 // Your store is a hook! You can put anything in it: primitives, objects, functions. The set function merges state.
 
 //can put any name instead of useAuthStore
