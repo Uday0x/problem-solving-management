@@ -6,6 +6,8 @@ import { Toaster } from 'react-hot-toast'
 import { useAuthStore } from './store/useAuthStore'
 import { useEffect } from 'react'
 import { Loader } from "lucide-react";
+import Layout from './layout/Layout'
+
 
 
 const App = () => {
@@ -31,11 +33,12 @@ const App = () => {
 
       {/* //toaster has to be mentioned here so that it can be used in components */}
       <Routes>
-
-      <Route
-      path="/"
-      element={<HomePage/>}
-    />
+        <Route path="/" element={<Layout />}>
+          <Route
+            index
+            element={authUser ? <HomePage /> : <Navigate to={"/login"} />}
+          />
+        </Route>
 
 
     <Route 

@@ -36,15 +36,15 @@ export const useAuthStore = create((set) => ({
     login:async(data)=>{
         set({isLogginIn:true})
         try {
-            const res = axiosInstance.post("/auth/login",data)  //be careful wt abt route u hitting 
+            const res = await axiosInstance.post("/auth/login",data)  //be careful wt abt route u hitting 
             set({authUser:res.data.user})
 
             toast.success(res.data.message);  //dont forget to import toast from react hot  in app.jsx file
         } catch (error) {
-            console.log("error siging up",error)
-            toast.error("error signing up")
+            console.log("error siging in",error)
+            toast.error("error signing in")
         }finally{
-            set({isSignUp:false})
+            set({isLoggingIn: false })
         }
     },
 
