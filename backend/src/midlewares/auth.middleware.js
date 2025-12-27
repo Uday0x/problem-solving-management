@@ -25,7 +25,7 @@ try {
             //verify whether teh token id right or not 
             decoded = jwt.verify(token,process.env.JWT_SECRET)
         } catch (error) {
-            return res.status.json({
+            return res.status(401).json({
                 message:"unauthorized token"
             })
         }
