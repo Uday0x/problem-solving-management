@@ -11,9 +11,13 @@ import AdminRoute from './components/AdminRoute'
 import AddProblem from './page/AddProblem'
 
 
+console.log("🔥 APP FILE LOADED 🔥");
 
 const App = () => {
   const {authUser,checkAuth,isCheckingAuth} = useAuthStore()
+
+  console.log("authUser in app.jsx",authUser);
+  console.log("isCheckingAuth in app.jsx",isCheckingAuth);
 
 
   useEffect(()=>{

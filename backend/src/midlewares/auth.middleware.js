@@ -14,7 +14,7 @@ try {
     
         //checking
         if(!token){
-            res.status(200).json({
+            return res.status(200).json({
                 message:"no valid token found"
             })
         }
@@ -75,7 +75,7 @@ export const checkAdmin = async(req,res,next)=>{
         console.log(user)
 
 
-        if(!user || !user.role == "ADMIN"){
+        if(!user || (!user.role) == "ADMIN"){
             return res.status(403).json({
                 message:"Access denied only admins allowed"
             })
