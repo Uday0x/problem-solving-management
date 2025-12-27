@@ -6,7 +6,7 @@ import { authMiddleware, checkAdmin } from "../midlewares/auth.middleware.js";
 const problemRoutes = express.Router()
 
 
-problemRoutes.post("/create",authMiddleware,checkAdmin,createProblem)  
+problemRoutes.post("/create-problem",authMiddleware,checkAdmin,createProblem)  
 problemRoutes.get("/get-all-Problems",authMiddleware,getAllProblems)
 problemRoutes.get("/get-problem/:id",authMiddleware,getProblemById)
 problemRoutes.post("/update/:id",authMiddleware,updateProblem)

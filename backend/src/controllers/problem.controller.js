@@ -9,6 +9,8 @@
       const {title,description,difficulty,tags,examples,constraints,hints,testcases,codeSnippets, referenceSolutions 
   } = req.body
 
+
+  //going to check user is admin or not in the middleware
       try {
           for (const [language,solutionCode] of Object.entries(referenceSolutions)) {
                 //create a mini which feteches the languageId

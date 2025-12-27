@@ -2,7 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser"; 
 import authRoutes from "./routes/authRoutes.js";
-import problemRoutes from "./routes/problemstoutes.js";
+import problemRoutes from "./routes/problemRoutes.js";
 import executeRoutes from "./routes/executeCodeRoutes.js";
 import { submissionRouter } from "./routes/submissionRoutes.js";
 import { playlistRouter } from "./routes/playlist.routes.js";
@@ -26,7 +26,7 @@ app.use(
 //u can also give all here
 
 app.use("/api/v1/auth",authRoutes)
-app.use("/api/v1/problem",problemRoutes)
+app.use("/api/v1/problems",problemRoutes)
 app.use("/api/v1/execute-code",executeRoutes)
 app.use("/api/v1/submission",submissionRouter)
 app.use("/api/v1/playlist",playlistRouter)

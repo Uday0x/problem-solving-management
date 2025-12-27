@@ -6,7 +6,7 @@ import { executeCode } from "../controllers/executeCode.controller.js";
 const executeRoutes = express.Router();
 
 
-executeRoutes.post("/execute",authMiddleware,executeCode)
+executeRoutes.post("/",authMiddleware,executeCode)
 
 
 export default executeRoutes
