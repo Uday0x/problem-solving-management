@@ -81,14 +81,18 @@
 
   export const getAllProblems = async(req,res)=>{
     //using findmany get all the problems
-    //check what if problems dont arrive from the databacse 
+    //check what if problems dont arrive from the database 
     //return response and error
 
     try {
       const problems = await db.problem.findMany(
         {
-          where:{
-              //condition needs to given later
+          include:{
+            solvedBy:{
+              where:{
+                userId:req.user.id
+              }
+            }
           }
         }
       )
