@@ -105,7 +105,7 @@
 
       res.status(200).json({
         message:"message fetched successfully",
-        data:problems
+        problems,
       })
     } catch (error) {
       console.log("problems nhi aa rhe bhai",error)
