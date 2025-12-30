@@ -1,41 +1,38 @@
-import {Routes,Route,Navigate} from 'react-router-dom'
-import SignUpform from './page/SignUpform'
-import HomePage from './page/HomePage'
-import LoginPage from './page/LoginPage'
-import { Toaster } from 'react-hot-toast'
-import { useAuthStore } from './store/useAuthStore'
-import { useEffect } from 'react'
+import { Routes, Route, Navigate } from "react-router-dom";
+import SignUpform from "./page/SignUpform";
+import HomePage from "./page/HomePage";
+import LoginPage from "./page/LoginPage";
+import { Toaster } from "react-hot-toast";
+import { useAuthStore } from "./store/useAuthStore";
+import { useEffect } from "react";
 import { Loader } from "lucide-react";
-import Layout from './layout/Layout'
-import AdminRoute from './components/AdminRoute'
-import AddProblem from './page/AddProblem'
-
+import Layout from "./layout/Layout";
+import AdminRoute from "./components/AdminRoute";
+import AddProblem from "./page/AddProblem";
+import ProblemPage from "./page/ProblemPage";
 
 console.log("🔥 APP FILE LOADED 🔥");
 
 const App = () => {
-  const {authUser,checkAuth,isCheckingAuth} = useAuthStore()
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
-  console.log("authUser in app.jsx",authUser);
-  console.log("isCheckingAuth in app.jsx",isCheckingAuth);
+  console.log("authUser in app.jsx", authUser);
+  console.log("isCheckingAuth in app.jsx", isCheckingAuth);
 
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
-  useEffect(()=>{
-    checkAuth()
-  },[checkAuth])
-
-
-  if(isCheckingAuth && !authUser){
+  if (isCheckingAuth && !authUser) {
     return (
-    <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen">
         <Loader className="size-10 animate-spin" />
-    </div>
+      </div>
     );
   }
   return (
-    <div className='flex flex-col items-center justify-start'
-    >
-      <Toaster/>      
+    <div className="flex flex-col items-center justify-start">
+      <Toaster />
 
       {/* //toaster has to be mentioned here so that it can be used in components */}
       <Routes>
@@ -46,29 +43,30 @@ const App = () => {
           />
         </Route>
 
+        <Route
+          path="/login"
+          element={!authUser ? <LoginPage /> : <Navigate to={"/"} />}
+        />
 
-    <Route 
-    path="/login"
-    element={!authUser ? <LoginPage/> : <Navigate to = {"/"}/>}
-    />
+        <Route
+          path="/signup"
+          element={!authUser ? <SignUpform /> : <Navigate to={"/"} />}
+        />
 
+        <Route
+          path="/problem/:id"
+          element={authUser ? <ProblemPage /> : <Navigate to={"/login"} />}
+        />
 
-    <Route 
-    path="/signup"
-    element={!authUser ? <SignUpform/> : <Navigate to ={"/"}/>}
-    />
-
-
-    <Route 
-    element={<AdminRoute/>}>
-      <Route
-      path="/add-problem"
-      element={authUser ? <AddProblem/> : <Navigate to ="/"/>}
-      />
-          </Route>
+        <Route element={<AdminRoute />}>
+          <Route
+            path="/add-problem"
+            element={authUser ? <AddProblem /> : <Navigate to="/" />}
+          />
+        </Route>
       </Routes>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

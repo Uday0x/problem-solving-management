@@ -3,6 +3,8 @@ import { CheckCircle2, XCircle, Clock, MemoryStick as Memory } from 'lucide-reac
 
 const SubmissionResults = ({ submission }) => {
   // Parse stringified arrays
+  console.log("submission:", submission);
+
   const memoryArr = JSON.parse(submission.memory || '[]');
   const timeArr = JSON.parse(submission.time || '[]');
 
@@ -15,8 +17,8 @@ const SubmissionResults = ({ submission }) => {
     .map(t => parseFloat(t)) // remove ' s' using parseFloat
     .reduce((a, b) => a + b, 0) / timeArr.length;
 
-  const passedTests = submission.testCases.filter(tc => tc.passed).length;
-  const totalTests = submission.testCases.length;
+  const passedTests = submission.testcases.filter(tc => tc.passed).length;
+  const totalTests = submission.testcases.length;
   const successRate = (passedTests / totalTests) * 100;
 
   return (
@@ -84,10 +86,10 @@ const SubmissionResults = ({ submission }) => {
                 </tr>
               </thead>
               <tbody>
-                {submission.testCases.map((testCase) => (
-                  <tr key={testCase.id}>
+                {submission.testcases.map((testcase) => (
+                  <tr key={testcase.id}>
                     <td>
-                      {testCase.passed ? (
+                      {testcase.passed ? (
                         <div className="flex items-center gap-2 text-success">
                           <CheckCircle2 className="w-5 h-5" />
                           Passed
@@ -99,10 +101,10 @@ const SubmissionResults = ({ submission }) => {
                         </div>
                       )}
                     </td>
-                    <td className="font-mono">{testCase.expected}</td>
-                    <td className="font-mono">{testCase.stdout || 'null'}</td>
-                    <td>{testCase.memory}</td>
-                    <td>{testCase.time}</td>
+                    <td className="font-mono">{testcase.expected}</td>
+                    <td className="font-mono">{testcase.stdout || 'null'}</td>
+                    <td>{testcase.memory}</td>
+                    <td>{testcase.time}</td>
                   </tr>
                 ))}
               </tbody>
