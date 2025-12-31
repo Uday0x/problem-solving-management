@@ -1,4 +1,4 @@
-import e from "express";
+
 import { db } from "../libs/db.js";
 
 
@@ -32,32 +32,38 @@ export const getAllSubmission = async(req,res)=>{
 }
 
 
-export const getSubmissionForProblem = async(req,res)=>{
+export const getSubmissionForProblem = async (req, res) => {
+  try {
+    const { problemId } = req.params;
+    const userId = req.user.id;
 
+    console.log("USER ID:", userId);
+    console.log("PROBLEM ID:", problemId);
 
-    const problemId=req.params.problemId
-    const userId = req.user.id
+    const submissions = await db.submission.findMany({
+      where: {
+        userId,
+        problemId,
+      },
+      include: {
+        testcases: true, // frontend crash fix // important
+      },
+    });
 
-    try {
-        const submissions = await db.submission.findMany({
-            where:{
-                userId,
-                problemId
-            }
-        })
-
-        res.status(300).json({
-            success:true,
-            message:"fetched the submission for the problem"
-        })
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({
-            success:false,
-            message:"error in fetching teh problem"
-        })
-    }
+    return res.status(200).json({
+      success: true,
+      message: "Fetched submissions successfully",
+      submissions,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Error fetching submissions",
+    });
+  }
 }
+
 
 export const getAllSubmissionsForProblems = async(req,res)=>{
         try {
