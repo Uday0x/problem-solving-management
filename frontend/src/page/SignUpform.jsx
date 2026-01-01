@@ -19,8 +19,8 @@ import {
 
 const signUpschema = z.object({
   email: z.string().email("enter valid email Id address plz"),
-  password: z.string().min(6, "passowrd must be atalest of 6 characters"),
-  name: z.string().min(3, "Nmae must be atlest of 3 characters")
+  password: z.string().min(6, "password must be atleast of 6 characters"),
+  name: z.string().min(3, "Name must be atlest of 3 characters")
 
 })
 
