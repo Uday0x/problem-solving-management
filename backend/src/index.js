@@ -23,6 +23,8 @@ app.use(
     })
 )
 
+
+app.set("trust proxy", 1);
 //u can also give all here
 
 app.use("/api/v1/auth",authRoutes)
