@@ -18,13 +18,17 @@ export const useAuthStore = create((set) => ({
 
 
         try {
-            const res = await axiosInstance.get("/auth/check") //if any doubt u can refer to axios instance //bcz lareay /api/v1 is already present there
+            const res = await axiosInstance.get("/auth/check") //if any doubt u can refer to axios instance //bcz already /api/v1 is already present there
             console.log("check response",res.data);
 
             set({authUser:res.data.user}) //in the auth/check route we are returning user data 
             
         } catch (error) {
             console.log("error checking auth",error);
+               set({
+      authUser: null,          // ❗ explicitly null
+      isCheckingAuth: false,
+    });
             set({authUser:null})
         }finally{
             set({isCheckingAuth:false})
