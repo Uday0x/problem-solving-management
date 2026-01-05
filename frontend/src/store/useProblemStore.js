@@ -41,6 +41,12 @@ export const useProblemStore = create((set) => ({
     }
   },
 
+
+    removeProblem: (id) =>
+    set((state) => ({
+      problems: state.problems.filter((p) => p.id !== id),
+    })),
+
   getSolvedProblemByUser: async () => {
     try {
       const res = await axiosInstance.get("/problems/get-solved-problem");

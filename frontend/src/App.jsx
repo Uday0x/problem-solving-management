@@ -60,7 +60,7 @@ const App = () => {
         />
 
          <Route
-          path="/problems"
+          path="/problem/:id"
            element={authUser ? <ProblemPage /> : <Navigate to={"/login"} />}
         />
 

@@ -25,6 +25,7 @@ app.use(
         credentials:true
     })
 )
+app.use(express.urlencoded({ extended: true }));
 
 
 app.set("trust proxy", 1);

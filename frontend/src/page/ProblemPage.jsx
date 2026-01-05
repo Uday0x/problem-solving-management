@@ -25,9 +25,10 @@ import Submission from "../components/Submission.jsx"
 import SubmissionsList from "../components/SubmissionList";
 
 
+
 const ProblemPage = () => {
   const { id } = useParams();
-  const { getProblemById, problem, isProblemLoading } = useProblemStore();
+  const { getProblemById, problem, isProblemLoading,getAllProblems} = useProblemStore();
 
   const {
     submission: submissions,
@@ -49,6 +50,11 @@ const ProblemPage = () => {
     getProblemById(id);
     getSubmissionCountForProblem(id);
   }, [id]);
+
+  useEffect(() => {
+  getAllProblems();
+}, []);
+
 
   useEffect(() => {
     if (problem) {
@@ -326,7 +332,7 @@ const ProblemPage = () => {
               </div>
 
               <div className="p-4 border-t border-base-300 bg-base-200">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-center items-center">
                   <button
                     className={`btn btn-primary gap-2 ${
                       isExecuting ? "loading" : ""
@@ -337,9 +343,7 @@ const ProblemPage = () => {
                     {!isExecuting && <Play className="w-4 h-4" />}
                     Run Code
                   </button>
-                  <button className="btn btn-success gap-2">
-                    Submit Solution
-                  </button>
+             
                 </div>
               </div>
             </div>

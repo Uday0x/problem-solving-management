@@ -6,11 +6,14 @@ import { useActions } from "../store/useAction"
 import AddToPlaylistModal from './AddToPlaylist'
 import CreatePlaylistModal from './CreatePlaylistModal'
 import { usePlaylistStore } from "../store/usePlaylistStore"
+import { useProblemStore } from "../store/useProblemStore";
 
 
-const ProblemsTable = ({ problems }) => {
+
+const ProblemsTable = () => {
   const { authUser } = useAuthStore();
   const { onDeleteProblem } = useActions();
+  // const { onEditProblem } = useActions();
   const { createPlaylist } = usePlaylistStore();
   const [search, setSearch] = useState("");
   const [difficulty, setDifficulty] = useState("ALL");
@@ -19,6 +22,9 @@ const ProblemsTable = ({ problems }) => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isAddToPlaylistModalOpen, setIsAddToPlaylistModalOpen] = useState(false);
   const [selectedProblemId, setSelectedProblemId] = useState(null);
+  const { problems } = useProblemStore();
+  
+
 
   // Extract all unique tags from problems
   const allTags = useMemo(() => {
@@ -58,6 +64,18 @@ const ProblemsTable = ({ problems }) => {
   const handleDelete = (id) => {
     onDeleteProblem(id);
   };
+
+//  const handleUpdate = (problem) => {
+//   onEditProblem(problem.id, {
+//     title: problem.title,
+//     description: problem.description,
+//     difficulty: problem.difficulty,
+//     tags: problem.tags,
+//     examples: problem.examples,
+//     constraints: problem.constraints,
+//     testcases: problem.testcases,
+//   });
+// };
 
   const handleCreatePlaylist = async (data) => {
     await createPlaylist(data);
@@ -185,9 +203,8 @@ const ProblemsTable = ({ problems }) => {
                             >
                               <TrashIcon className="w-4 h-4 text-white" />
                             </button>
-                            <button disabled className="btn btn-sm btn-warning">
-                              <PencilIcon className="w-4 h-4 text-white" />
-                            </button>
+                            
+                          
                           </div>
                         )}
                         <button
