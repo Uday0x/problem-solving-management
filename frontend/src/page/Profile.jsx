@@ -95,10 +95,10 @@ const Profile = () => {
             </div>
             
             {/* Action Buttons */}
-            <div className="card-actions justify-end mt-6">
+            {/* <div className="card-actions justify-end mt-6">
               <button className="btn btn-outline btn-primary">Edit Profile</button>
               <button className="btn btn-primary">Change Password</button>
-            </div>
+            </div> */}
           </div>
         </div>
         

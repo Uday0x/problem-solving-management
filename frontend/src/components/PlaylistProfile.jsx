@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { usePlaylistStore } from '../store/usePlaylistStore';
 import { Link } from 'react-router-dom';
 import { BookOpen, ChevronDown, ChevronUp, Clock, List, Tag, ExternalLink } from 'lucide-react';
+import CreatePlaylistModal from '../components/CreatePlaylistModal';
 
 const PlaylistProfile = () => {
   const { getAllPlaylists, playlists , deletePlaylist } = usePlaylistStore();
   const [expandedPlaylist, setExpandedPlaylist] = useState(null);
+  
 
   useEffect(() => {
     getAllPlaylists();
@@ -50,9 +52,7 @@ const PlaylistProfile = () => {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-primary">My Playlists</h2>
-          <button className="btn btn-primary btn-sm">
-            Create Playlist
-          </button>
+         
         </div>
 
         {playlists.length === 0 ? (
