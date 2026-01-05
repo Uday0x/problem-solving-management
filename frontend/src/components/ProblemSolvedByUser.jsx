@@ -105,13 +105,11 @@ const ProblemSolvedByUser = () => {
             </div>
             
             <div className="card-footer bg-base-200 p-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm">
+              <div className="flex justify-center items-center">
+                <span className="text-sm center ">
                   Total problems solved: <span className="font-bold">{solvedProblems.length}</span>
                 </span>
-                <Link to="/problems" className="btn btn-sm btn-primary">
-                  Solve more problems
-                </Link>
+               
               </div>
             </div>
           </div>
