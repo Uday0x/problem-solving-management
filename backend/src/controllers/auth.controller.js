@@ -58,12 +58,16 @@ export const register = async (req, res) => {
     });
 
     res.status(201).json({
-      id: newUser.id,
-      name: newUser.name,
-      email: newUser.email,
-      role: newUser.role,
-      image: newUser.image, //not handled yet this is for future purposes
-    });
+            success:true,
+            message:"User created successfully",
+            user:{
+                id:newUser.id,
+                email:newUser.email,
+                name:newUser.name,
+                role:newUser.role,
+                image:newUser.image
+            }
+        })
   } catch (error) {
     console.error("error hai bhai in registering", error);
     return res.status(200).json({
