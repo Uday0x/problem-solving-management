@@ -2,9 +2,14 @@ import React, { useState } from 'react'
 import { z } from "zod";
 import { useForm } from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/useAuthStore';
 import AuthImagePattern from '../components/AuthImagePattern'
+
+
+
+
+
 import {
   Code,
   Eye,
@@ -26,9 +31,8 @@ const signUpschema = z.object({
 
 
 
-
 function SignUpform() {
-
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false) // this is for eye symbol in the password field
 
   const {signup,isSigninUp} = useAuthStore()
@@ -42,9 +46,11 @@ function SignUpform() {
   console.log(register, handleSubmit) //printing it for the curiosity //for rregister has input tracking field
 
  const onSumbit = async(data)=>{
+  
       try {
         await signup(data)
         console.log("sign up data",data)
+        navigate("/");  //its important to force redirect ,we just cant rely on the authUser state change 
       } catch (error) {
         console.error("SignUp failed",error)
       }
@@ -161,7 +167,7 @@ function SignUpform() {
                   Loading...
                 </>
               ) : (
-                "Sign in"
+                "Sign up"
               )}
             </button>
           </form>
