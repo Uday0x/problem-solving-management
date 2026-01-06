@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { UserRole } from "../generated/prisma/index.js";
 
+const isProd = process.env.NODE_ENV === "production";
+
 export const register = async (req, res) => {
   //get the data from request body
   //check if there any existing user
@@ -52,22 +54,24 @@ export const register = async (req, res) => {
 
     res.cookie("jwt", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // MUST true in prod
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: isProd,
+      // MUST true in prod
+      sameSite: isProd ? "none" : "lax",
+      domain: isProd ? ".up.railway.app" : undefined,
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });
 
     res.status(201).json({
-            success:true,
-            message:"User created successfully",
-            user:{
-                id:newUser.id,
-                email:newUser.email,
-                name:newUser.name,
-                role:newUser.role,
-                image:newUser.image
-            }
-        })
+      success: true,
+      message: "User created successfully",
+      user: {
+        id: newUser.id,
+        email: newUser.email,
+        name: newUser.name,
+        role: newUser.role,
+        image: newUser.image,
+      },
+    });
   } catch (error) {
     console.error("error hai bhai in registering", error);
     return res.status(200).json({
@@ -111,11 +115,11 @@ export const login = async (req, res) => {
       expiresIn: "7d",
     });
 
-    res.cookie("jwt", token, {
+    res.clearCookie("jwt", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // MUST true in prod
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: 1000 * 60 * 60 * 24 * 7,
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
+      domain: isProd ? ".up.railway.app" : undefined,
     });
 
     res.status(200).json({
@@ -139,12 +143,11 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
- res.clearCookie("jwt", {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-});
-
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    });
 
     res.status(200).json({
       success: true,

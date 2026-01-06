@@ -3,6 +3,7 @@
 
 
 
+console.log("REQ HIT");
 
   export const createProblem= async(req,res)=>{
       //get the required data 
