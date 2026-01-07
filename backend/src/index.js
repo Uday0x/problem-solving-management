@@ -14,13 +14,15 @@ dotenv.config()   //safe to do so
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+console.log("🔥 NODE_ENV =", process.env.NODE_ENV);
+
 app.use(express.json());
 app.use(cookieParser());
 app.use( 
     cors({
         origin: [
       "http://localhost:5173",
-      "https://codelabss.up.railway.app"        // 👈 Vercel / Railway frontend
+      "https://practical-amazement-production.up.railway.app"        // 👈 Vercel / Railway frontend
     ],
         credentials:true
     })
