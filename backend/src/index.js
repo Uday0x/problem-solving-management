@@ -20,7 +20,7 @@ app.use(
     cors({
         origin: [
       "http://localhost:5173",
-      "https://codelabss.up.railway.app" // 👈 Vercel / Railway frontend
+      "https://codelabss.up.railway.app"        // 👈 Vercel / Railway frontend
     ],
         credentials:true
     })
