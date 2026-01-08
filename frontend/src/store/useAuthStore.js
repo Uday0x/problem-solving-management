@@ -7,7 +7,7 @@ import toast, { ErrorIcon } from "react-hot-toast";
 // Your store is a hook! You can put anything in it: primitives, objects, functions. The set function merges state.
 
 //can put any name instead of useAuthStore
-export const useAuthStore = create((set) => ({
+export const useAuthStore = create((set) => ({   //create is responsible for creating globalStore
   authUser: null,
   isSigninUp: false,
   isLogginIn: false,
@@ -31,6 +31,9 @@ export const useAuthStore = create((set) => ({
       const res = await axiosInstance.post("/auth/login", data);
       set({ authUser: res.data.user });
       toast.success(res.data.message);
+    } catch(error){
+        console.log("Error loggin the user",error);
+        toast.error("Error logging In")
     } finally {
       set({ isLogginIn: false });
     }
@@ -43,14 +46,22 @@ export const useAuthStore = create((set) => ({
       set({ authUser: res.data.user });
       toast.success(res.data.message);
       return res.data.user;
+    }catch(error){
+      console.log("Error signing Up",error)
+      toast.error("Error signingUp")
     } finally {
       set({ isSigninUp: false });
     }
   },
 
   logout: async () => {
-    await axiosInstance.post("/auth/logout");
-    set({ authUser: null });
-    toast.success("Logout successful");
+   try {
+     await axiosInstance.post("/auth/logout");
+     set({ authUser: null });
+     toast.success("Logout successful");
+   } catch (error) {
+    console.log("Error logging Out",error);
+    toast.error("Error logging Out");
+   }
   },
 }));
